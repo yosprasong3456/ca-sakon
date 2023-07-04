@@ -1,5 +1,10 @@
 const db = require('../config/dbConfig')
+const config = require("../config/index");
+
 const knex = db.knexBuilder
+const base_api = "https://canceranywhere.com/caw-gateway-production/";
+const axios = require("axios");
+const token = `Basic ${config.TOKEN_API}`;
 
 const personHis = async () => {
     try {
@@ -9,6 +14,12 @@ const personHis = async () => {
         console.error(error)
     }
 }
+
+const uploadData = (params) => {
+    return axios.post(base_api + `patient`, params, {
+      headers: { Authorization: token },
+    });
+  };
 
 exports.getPersonHis = async (req, res, next) => {
     try {
@@ -27,4 +38,22 @@ exports.getPersonHis = async (req, res, next) => {
             }
         })
     }
+}
+
+exports.sendPersonCA = async (req, res, next) => {
+    try {
+        const result = await uploadData(req.body);
+        console.log(result.data);
+        if (result.data.message === "DONE") {
+          return res.status(200).json({
+            message: "success",
+            status: "ok",
+          });
+        }
+      } catch (error) {
+        res.status(400).json({
+          message: "error",
+          status: "error",
+        });
+      }
 }
