@@ -1,59 +1,69 @@
-const db = require('../config/dbConfig')
+const db = require("../config/dbConfig");
 const config = require("../config/index");
 
-const knex = db.knexBuilder
-const base_api = "https://canceranywhere.com/caw-gateway-production/";
+const knex = db.knexBuilder;
 const axios = require("axios");
 const token = `Basic ${config.TOKEN_API}`;
 
 const personHis = async () => {
-    try {
-        const sql = await knex.select('*').from('v_person_ca')
-        return sql
-    } catch (error) {
-        console.error(error)
-    }
-}
-
-const uploadData = (params) => {
-    return axios.post(base_api + `patient`, params, {
-      headers: { Authorization: token },
-    });
-  };
+  try {
+    const sql = await knex
+      .select("*")
+      .from("v_person_ca")
+    return sql;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 exports.getPersonHis = async (req, res, next) => {
-    try {
-        const data = await personHis()
-        console.log(data)
-        res.status(200).json({
-            message: 'success',
-            data: data
-            
-        })
-    } catch (error) {
-        res.status(400).json({
-            error: {
-                message: 'error',
-                message: error.message
-            }
-        })
-    }
-}
+  try {
+    const data = await personHis();
+    res.status(200).json({
+      message: "success",
+      data: data,
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: {
+        message: "error",
+        message: error.message,
+      },
+    });
+  }
+};
 
-exports.sendPersonCA = async (req, res, next) => {
-    try {
-        const result = await uploadData(req.body);
-        console.log(result.data);
-        if (result.data.message === "DONE") {
-          return res.status(200).json({
-            message: "success",
-            status: "ok",
-          });
-        }
-      } catch (error) {
-        res.status(400).json({
+exports.sendPerson = async (req, res, next) => {
+  try {
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "https://canceranywhere.com/caw-gateway-production/patient",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      data: req.body,
+    };
+    axios
+      .request(config)
+      .then((response) => {
+        return res.status(200).json({
+          message: response.data.message,
+          status: "ok",
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        return res.status(400).json({
           message: "error",
           status: "error",
         });
-      }
-}
+      });
+  } catch (error) {
+    res.status(400).json({
+      message: "error",
+      status: "error",
+    });
+  }
+};

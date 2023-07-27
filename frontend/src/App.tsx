@@ -11,6 +11,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Welcome from "./pages/Welcome";
+import { SnackbarProvider } from "notistack";
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -47,6 +48,12 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
+      <SnackbarProvider
+        maxSnack={15}
+        autoHideDuration={3000}
+        anchorOrigin={{ horizontal: "right", vertical: "top" }}
+        className="Snackbar"
+      />
         <Routes>
    
           <Route path="/login" element={<Login />} />

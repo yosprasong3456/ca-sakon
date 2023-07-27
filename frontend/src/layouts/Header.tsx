@@ -162,14 +162,14 @@ function Header() {
           >
             <Box
               sx={{
-                width: { xs: 50, sm: 50, md: 80 },
+                width: {sm: 150, md: 220},
                 // marginTop: 1,
               }}
             >
               <img
-                src="/udch.png"
+                src="https://www.udch.go.th/images/logo/logo%20udch2022.png"
                 onClick={() => navigate("/welcome")}
-                style={{ cursor: "pointer", width: "85%", backgroundColor:'white', borderRadius:'50%' }}
+                style={{ cursor: "pointer", width: "85%", backgroundColor:'white', borderRadius:10 }}
               />
             </Box>
 
