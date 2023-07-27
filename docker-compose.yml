@@ -1,0 +1,28 @@
+# docker-compose up -d
+version: "3.5"
+
+services:
+  backend: 
+    build: backend/
+    image: ca-sakon-backend
+    container_name: ca-backend-con
+    restart: always
+    ports:
+      - 3000:3000 
+    networks:
+      - reactnetwork
+  frontend:
+    build: frontend/
+    image: ca-sakon-fontend
+    container_name: ca-fontend-con
+    ports:
+      - 80:80
+    depends_on:
+      - backend
+    networks:
+      - reactnetwork
+
+networks:
+  reactnetwork:
+    name: cancer-anywhere-sakon
+    driver: bridge

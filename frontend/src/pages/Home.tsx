@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../layouts/Header";
 import {
   Box,
   Button,
   CircularProgress,
-  CircularProgressProps,
   Typography,
 } from "@mui/material";
 import axios from "axios";
@@ -18,7 +17,6 @@ function Home({}: Props) {
   const [loading, setLoading] = useState(false);
   const [isData, setIsData] = useState(false);
   const [person, setPerson] = useState([]);
-  const [progress, setProgress] = useState(0);
   useEffect(() => {
     getData();
   }, []);
@@ -26,7 +24,6 @@ function Home({}: Props) {
   const getData = async () => {
     setLoading(true);
     setIsData(false);
-    setProgress(0);
     setPerson([]);
     let result = await axios.get("http://localhost:3000/api/personHis");
     if (result.data.message === "success") {

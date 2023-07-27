@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 // import { useSelector } from "react-redux";
 // import { authSelector, login } from "../store/slices/authSlice";
 // import { useAppDispatch } from "../store/store";
-import { Popover } from "@mui/material";
 
 function Copyright(props: any) {
   return (

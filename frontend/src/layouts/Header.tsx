@@ -4,35 +4,24 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
+
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
+
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
-import ImageIcon from "@mui/icons-material/Image";
-import WorkIcon from "@mui/icons-material/Work";
-import BeachAccessIcon from "@mui/icons-material/BeachAccess";
 
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-// import { authSelector, logout } from "../store/slices/authSlice";
-// import { useAppDispatch } from "../store/store";
-import { useEffect } from "react";
-// import SwitchMode from "../components/SwitchMode";
+
 import {
-  Badge,
-  BadgeProps,
   Divider,
   Drawer,
-  List,
+
   ListItem,
-  ListItemAvatar,
+
   ListItemText,
   Stack,
-  styled,
 } from "@mui/material";
 // import { personHisSelector } from "../store/slices/personHisSlice";
 
@@ -41,17 +30,9 @@ import {
 const navButton = [
   { name: "👋🏽 ผู้ป่วยรายใหม่", router: "/home" },
   { name: "🏥 ผู้ป่วยส่งข้อมูลแล้ว", router: "/personCA" },
-  // { name: "🔎 ค้นหาผู้ป่วย", router: "/search" },
 ];
 function Header() {
-//   const dispatch = useAppDispatch();
-//   const authReducer = useSelector(authSelector);
-//   const personHisReducer = useSelector(personHisSelector);
-
   const navigate = useNavigate();
-  useEffect(() => {
-    // console.log(authReducer.authData);
-  }, []);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -243,12 +224,12 @@ function Header() {
   );
 }
 
-const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
-  "& .MuiBadge-badge": {
-    right: -10,
-    top: 5,
-    // border: `2px solid ${theme.palette.background.paper}`,
-    padding: "0 4px",
-  },
-}));
+// const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
+//   "& .MuiBadge-badge": {
+//     right: -10,
+//     top: 5,
+//     // border: `2px solid ${theme.palette.background.paper}`,
+//     padding: "0 4px",
+//   },
+// }));
 export default Header;

@@ -1,5 +1,4 @@
 import { Box, Grid, Paper, Typography } from "@mui/material";
-import React from "react";
 import Header from "../layouts/Header";
 
 type Props = {};
