@@ -9,7 +9,7 @@ const personHis = async () => {
   try {
     const sql = await knex
       .select("*")
-      .from("v_person_ca")
+      .from("cancer_anywhere_person")
     return sql;
   } catch (error) {
     console.error(error);
@@ -38,7 +38,8 @@ exports.sendPerson = async (req, res, next) => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://canceranywhere.com/caw-gateway-production/patient",
+      // production : https://canceranywhere.com/caw-gateway-production/patient
+      url: "https://canceranywhere.com/caw-gateway/patient",
       headers: {
         "Content-Type": "application/json",
         Authorization: token,

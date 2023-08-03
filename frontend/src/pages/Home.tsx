@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import Header from "../layouts/Header";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Typography,
-} from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import axios from "axios";
 import DataTable from "../components/DataTable";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
@@ -60,14 +55,6 @@ function Home({}: Props) {
       ),
     },
     {
-      headerName: "ICD10",
-      field: "diagnosis_drg",
-      width: 100,
-      renderCell: ({ row }: GridRenderCellParams<string>) => (
-        <p>{row.diagnosis_drg}</p>
-      ),
-    },
-    {
       headerName: "Action",
       field: ".",
       width: 100,
@@ -98,6 +85,26 @@ function Home({}: Props) {
     }
   };
 
+  const sendAll = async () => {
+    if (person.length > 0) {
+      person.map(async (data: any) => {
+        const result = await axios.post(
+          "http://localhost:3000/api/sendPerson",
+          data
+        );
+        if (result.data.message === "DONE") {
+          enqueueSnackbar(`เพิ่มข้อมูล HN${data.hn} สำเร็จ!`, {
+            variant: "success",
+          });
+        } else {
+          enqueueSnackbar(`เพิ่มข้อมูล HN${data.hn} ล้มเหลว!`, {
+            variant: "error",
+          });
+        }
+      });
+    }
+  };
+
   return (
     <div>
       <Header />
@@ -108,6 +115,7 @@ function Home({}: Props) {
         variant="contained"
         sx={{ fontSize: 30, borderRadius: 3 }}
         disabled={!isData}
+        onClick={() => sendAll()}
       >
         ส่งข้อมูล
       </Button>
