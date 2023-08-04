@@ -35,11 +35,11 @@ exports.getPersonHis = async (req, res, next) => {
 
 exports.sendPerson = async (req, res, next) => {
   try {
+    delete req.body.death_date
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      // production : https://canceranywhere.com/caw-gateway-production/patient
-      url: "https://canceranywhere.com/caw-gateway/patient",
+      url: "https://canceranywhere.com/caw-gateway-production/patient",
       headers: {
         "Content-Type": "application/json",
         Authorization: token,
