@@ -68,3 +68,45 @@ exports.sendPerson = async (req, res, next) => {
     });
   }
 };
+
+function conUpLoadFunction(data){
+  delete data.death_date
+  let config = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: "https://canceranywhere.com/caw-gateway-production/patient",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+    data: data,
+  };
+  axios
+    .request(config)
+    .then((response) => {
+      console.log('cron',response.data.message)
+      return 1
+    })
+    .catch((error) => {
+      console.log(error);
+      return 0
+    });
+}
+
+exports.cornJopUpload= async (req, res, next) => {
+  try {
+    const data = await personHis();
+    data.map((val)=>conUpLoadFunction(val))
+    // res.status(200).json({
+    //   message: "success",
+    //   data: data,
+    // });
+  } catch (error) {
+    res.status(400).json({
+      error: {
+        message: "error",
+        message: error.message,
+      },
+    });
+  }
+};
