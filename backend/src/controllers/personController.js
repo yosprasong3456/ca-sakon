@@ -1,38 +1,37 @@
-// const db = require("../config/dbConfig");
+const db = require("../config/dbConfig");
 const config = require("../config/index");
 
-// const knex = db.knexBuilder;
+const knex = db.knexBuilder;
 const axios = require("axios");
 const token = `Basic ${config.TOKEN_API}`;
 // const iconv = require('iconv-lite');
-const { queryPromise, connection } = require('../config/dbConfig');
-
-// const personHis = async () => {
-//   try {
-//     const sql = await knex
-//       .select("*")
-//       .from("cancer_anywhere_person")
-//       .limit("10")
-//       // const cleanedData = utf8Data.replace(/\x00/g, '');
-//     return sql;
-    
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
+// const { queryPromise, connection } = require('../config/dbConfig');
 
 const personHis = async () => {
   try {
-    const results = await queryPromise('SELECT * FROM cancer_anywhere_person');
-    console.log('Query results:', results);
-    return results
+    await knex.raw('SET NAMES utf8');
+    const sql = await knex
+      .select("*")
+      .from("cancer_anywhere_person")
+    return sql;
+    
   } catch (error) {
-    console.error('Query error:', error.message);
-  } finally {
-    // Close the connection when done
-    // connection.end();
+    console.error(error);
   }
 };
+
+// const personHis = async () => {
+//   try {
+//     const results = await queryPromise('SELECT * FROM cancer_anywhere_person');
+//     console.log('Query results:', results);
+//     return results
+//   } catch (error) {
+//     console.error('Query error:', error.message);
+//   } finally {
+//     // Close the connection when done
+//     // connection.end();
+//   }
+// };
 
 // process.on('SIGINT', () => {
 //   connection.end();

@@ -25,6 +25,6 @@ app.get('/', (req, res) => {
 app.use('/api', indexRouter);
 
 
-app.listen(3000, () => {
+app.listen(3002, () => {
   console.log('Start server at port 3000.')
 })
