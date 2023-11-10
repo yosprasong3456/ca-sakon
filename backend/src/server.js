@@ -4,6 +4,7 @@ const indexRouter = require('./routes/index');
 const cors = require('cors')
 const cron = require('node-cron');
 const personController  = require('./controllers/personController')
+require('dotenv').config();
 
 app.use(cors())
 app.use(express.json())
@@ -25,6 +26,6 @@ app.get('/', (req, res) => {
 app.use('/api', indexRouter);
 
 
-app.listen(3000, () => {
-  console.log('Start server at port 3000.')
+app.listen(process.env.PORT, () => {
+  console.log('Start server at port '+process.env.PORT+'.')
 })
