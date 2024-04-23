@@ -4,6 +4,27 @@ const config = require("../config/index");
 const knex = db.knexBuilder;
 const axios = require("axios");
 const token = `Basic ${config.TOKEN_API}`;
+// const dbConnect = require("../config/dbConfig");
+
+const sql = require('mssql')
+
+const sqlConfig = {
+  user: 'sa',
+  password: 'P@ssw0rd@2',
+  database: 'hiptime40',
+  server: '172.16.1.17',
+  pool: {
+    max: 10,
+    min: 0,
+    idleTimeoutMillis: 30000
+  },
+  options: {
+    encrypt: false,
+    trustServerCertificate: true,
+  }
+}
+
+
 // const iconv = require('iconv-lite');
 // const { queryPromise, connection } = require('../config/dbConfig');
 
@@ -14,6 +35,8 @@ const personHis = async () => {
       .select("*")
       .from("cancer_anywhere_person")
     return sql;
+    // const row = await dbConnect.getrow('SELECT * FROM `cancer_anywhere_person`')
+    // return row
     
   } catch (error) {
     console.error(error);
@@ -40,13 +63,27 @@ const personHis = async () => {
 
 exports.getPersonHis = async (req, res, next) => {
   try {
-    const data = await personHis();
-    res.header("Content-Type", "application/json; charset=utf-8")
-    res.status(200).json({
-      message: "success",
-      data: data,
-    });
-    console.log(data)
+    // const data = await personHis();
+    // res.header("Content-Type", "application/json; charset=utf-8")
+    // res.status(200).json({
+    //   message: "success",
+    //   data: data,
+    // });
+    // console.log(data)
+    await sql.connect(sqlConfig)
+    const result = await sql.query`select * from Holiday`
+    console.log(result)
+    if(result.recordsets.length>0){
+      res.status(200).json({
+        message: "success",
+        data: result.recordsets[0],
+      });
+    }else{
+      res.status(200).json({
+        message: "success",
+        data: '',
+      });
+    }
   } 
   catch (error) {
     res.status(400).json({
