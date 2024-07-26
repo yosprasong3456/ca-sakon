@@ -34,7 +34,7 @@ exports.getPersonHis = async (req, res, next) => {
     if(data){
       res.status(200).json({
         message: "success",
-        data: data,
+        data: data[1],
       });
     }else{
       res.status(200).json({
